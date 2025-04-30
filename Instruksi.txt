@@ -1,0 +1,213 @@
+# Panduan Pengembangan Aplikasi TaskVerse: Aplikasi Manajemen Tugas Kuliah
+
+## Ringkasan Aplikasi
+TaskVerse adalah aplikasi mobile pribadi untuk pengelolaan tugas kuliah dengan antarmuka yang bersih dan fungsionalitas yang komprehensif. Aplikasi ini dirancang untuk membantu mahasiswa mengatur tugas kuliah, menetapkan deadline, mengategorikan aktivitas, dan melacak perkembangan tugas.
+
+## Platform Target
+- Android (Native)
+- iOS (Native)
+
+## Fitur Utama
+
+### 1. Manajemen Kategori
+- Sistem berbasis folder/kategori seperti:
+  - Kuliah
+  - Kerja
+  - Belajar
+  - Produktif
+  - Personal
+  - Lainnya (memungkinkan pengguna membuat kategori kustom)
+- Tampilan kategori di halaman utama sebagai "folder" yang dapat diklik
+- Kemampuan untuk mengedit, menambah, dan menghapus kategori
+
+### 2. Manajemen Task
+- Tambah tugas baru dengan detail:
+  - Judul tugas
+  - Deskripsi tugas
+  - Deadline (tanggal dan jam)
+  - Kategori
+  - Prioritas (Tinggi/Sedang/Rendah)
+  - Untuk tugas kuliah: field tambahan untuk mata kuliah dan jenis tugas (Tugas 1, 2, 3, dsb)
+  - Opsional: lampiran atau detail soal tugas
+- Edit dan hapus tugas
+- Mark as complete (checkmark) untuk tugas yang sudah selesai
+- Tampilkan waktu pembuatan task dan waktu penyelesaian
+
+### 3. Catatan Penyelesaian
+- Saat task ditandai selesai, pengguna dapat menambahkan catatan refleksi/penilaian
+- Catatan dapat berisi pengalaman, kesulitan, atau hal yang dipelajari dari tugas
+
+### 4. Filter dan Pengurutan
+- Filter berdasarkan kategori
+- Filter berdasarkan status (selesai/belum selesai)
+- Urutkan berdasarkan deadline (terdekat/terjauh)
+- Urutkan berdasarkan prioritas
+- Urutkan berdasarkan tanggal pembuatan
+
+### 5. Tampilan dan UI/UX
+- Tema minimalis mirip Notion
+- Mode gelap dan mode terang
+- Animasi halus saat transisi antar halaman dan interaksi
+- Tampilan intuitif dengan fokus pada kemudahan penggunaan
+- Tampilan kalender untuk visualisasi deadline
+
+### 6. Notifikasi
+- Pengingat deadline tugas
+- Notifikasi untuk tugas yang mendekati batas waktu
+- Kemampuan mengatur waktu notifikasi (1 hari sebelum, 3 jam sebelum, dsb)
+
+## Detil Teknis
+
+### Arsitektur
+- Clean Architecture dengan separation of concerns
+- Database lokal (SQLite/Realm)
+- State management yang efisien
+
+### UI Components
+- Tampilan kategori dengan ikon kustom
+- Card view untuk task list
+- Formulir interaktif untuk input task
+- Transisi dan animasi halus
+- Dukungan responsif untuk berbagai ukuran layar
+
+### Navigation
+- Bottom navigation dengan tab utama:
+  - Home (Kategori)
+  - Semua Tasks
+  - Kalender
+  - Statistik
+  - Profil
+
+## Spesifikasi Screen-by-Screen
+
+### 1. Splash Screen
+- Logo aplikasi TaskVerse dengan animasi fade-in
+- Transisi halus ke layar login/home
+
+### 2. Home Screen
+- Grid atau list kategorisasi task (Kuliah, Kerja, Belajar, dsb)
+- Quick action button (+ floating action button)
+- Ringkasan tugas mendatang (deadline terdekat)
+- Statistik kecil (jumlah tugas selesai hari ini)
+
+### 3. Category Detail Screen
+- Header dengan nama kategori
+- List tugas dalam kategori tersebut
+- Filter dan pengurutan dalam kategori
+- Tombol untuk menambah tugas baru dalam kategori ini
+
+### 4. Task Creation/Edit Screen
+- Form dengan field:
+  - Judul tugas (wajib)
+  - Deskripsi (opsional)
+  - Kategori (dropdown/picker)
+  - Mata kuliah (jika kategori adalah Kuliah)
+  - Jenis tugas (dropdown untuk Tugas 1, 2, 3, dsb)
+  - Deadline date picker
+  - Deadline time picker
+  - Prioritas selector
+  - Detail tambahan/soal tugas (text area)
+- Tombol Save/Update
+
+### 5. Task Detail Screen
+- Semua informasi tugas
+- Tombol edit
+- Tombol mark as complete
+- Jika tugas telah selesai: area catatan refleksi
+- Riwayat perubahan status
+
+### 6. Calendar View
+- Kalender bulanan/mingguan
+- Indikator visual untuk hari dengan tugas
+- Kemampuan untuk melihat dan menambah tugas langsung dari kalender
+
+### 7. Statistics Screen
+- Grafik tugas selesai vs belum selesai
+- Distribusi tugas berdasarkan kategori
+- Tren penyelesaian tugas mingguan/bulanan
+- Insight produktivitas
+
+### 8. Settings Screen
+- Toggle tema gelap/terang
+- Preferensi notifikasi
+- Pengaturan tampilan
+- Backup/restore data
+
+## Spesifikasi Desain
+
+### Color Scheme
+- Mode Terang:
+  - Background: #FFFFFF
+  - Primary: #3D5AFE
+  - Secondary: #00BFA5
+  - Accent: #FF4081
+  - Text Primary: #212121
+  - Text Secondary: #757575
+  
+- Mode Gelap:
+  - Background: #121212
+  - Primary: #5C6BC0
+  - Secondary: #26A69A
+  - Accent: #F06292
+  - Text Primary: #EEEEEE
+  - Text Secondary: #B0BEC5
+
+### Typography
+- Font utama: San Francisco (iOS) / Roboto (Android)
+- Alternatif: Inter atau SF Pro Display
+- Heading sizes:
+  - H1: 24sp
+  - H2: 20sp
+  - H3: 18sp
+  - Body: 16sp
+  - Caption: 14sp
+
+### Interaksi dan Animasi
+- Transisi halaman: slide dan fade
+- Animasi tombol: ripple effect dengan feedback haptic
+- Animasi checkmark: lottie animation saat menyelesaikan tugas
+- Animasi progres: saat memuat data atau menyimpan perubahan
+- Animation curves: natural easing
+
+## Teknologi Rekomendasi
+
+### Opsi 1: Flutter
+- Deskripsi: Framework cross-platform dengan kemampuan UI yang bagus
+- Kelebihan: Code base tunggal, performa bagus, kemampuan animasi yang kuat
+- State Management: Provider/Riverpod/Bloc
+- Database: Hive atau SQLite dengan drift
+- UI: Material 3 dengan custom theming
+
+### Opsi 2: React Native
+- Deskripsi: Framework JavaScript cross-platform
+- Kelebihan: Ekosistem npm yang luas, dukungan komunitas
+- State Management: Redux/Context API
+- Database: Realm atau AsyncStorage
+- UI: React Native Paper atau custom components
+
+### Opsi 3: Native Development
+- Android: Kotlin dengan Jetpack Compose
+- iOS: Swift dengan SwiftUI
+- Kelebihan: Performa optimal, akses API platform penuh
+
+## Testing dan Quality Assurance
+- Unit testing untuk logika bisnis
+- UI testing untuk flow utama
+- Performance testing terutama untuk render list dan animasi
+- Usability testing dengan pengguna mahasiswa
+
+## Timeline Development
+1. **Minggu 1-2**: Desain UI/UX dan wireframing
+2. **Minggu 3-4**: Pembuatan model data dan backend logic
+3. **Minggu 5-6**: Implementasi UI screens utama
+4. **Minggu 7-8**: Implementasi fitur manajemen task dan kategori
+5. **Minggu 9-10**: Implementasi filter, sorting, dan fitur tambahan
+6. **Minggu 11**: Testing dan debugging
+7. **Minggu 12**: Polishing dan finalisasi
+
+## Ekspektasi Output
+- Aplikasi mobile yang berfungsi penuh di Android dan iOS
+- Source code yang bersih, terdokumentasi, dan terorganisir
+- Dokumentasi API dan arsitektur
+- Design assets (icons, illustrations)
+- User guide singkat
